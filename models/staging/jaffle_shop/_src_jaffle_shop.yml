@@ -1,3 +1,31 @@
+<<<<<<< HEAD
+sources:
+  - name: jaffle_shop
+    database: raw  
+    schema: jaffle_shop  
+    # config: 
+    #      freshness:
+    #        warn_after:
+    #          count: 1
+    #          period: day
+    #        error_after:
+    #          count: 452
+    #          period: day
+    #      loaded_at_field: _etl_loaded_at
+    tables:
+      - name: orders
+      - name: customers
+        config: 
+          freshness: null
+
+  - name: stripe
+    database: raw
+    schema: stripe
+    tables:
+      - name: payment
+
+ 
+=======
 version: 2
 
 sources:
@@ -25,3 +53,4 @@ sources:
       - name: products
       - name: stores
       - name: supplies
+>>>>>>> fc71a1a3c33f44f3c39bade3f06b729487ffd0c5

@@ -1,5 +1,8 @@
 with 
 
+<<<<<<< HEAD
+from {{ source('jaffle_shop', 'orders') }}
+=======
 source as (
 
     select * from {{ source('jaffle_shop', 'orders_jdelgado') }}
@@ -20,3 +23,4 @@ renamed as (
 )
 
 select * from renamed
+>>>>>>> fc71a1a3c33f44f3c39bade3f06b729487ffd0c5
