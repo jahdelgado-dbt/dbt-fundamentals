@@ -5,9 +5,21 @@ sources:
     database: raw
     tables:
       - name: customers
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+              
       - name: customers_training
       - name: items
-      - name: orders
+      - name: orders_jdelgado
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+              
       - name: orders_snapshot2
       - name: orders_training
       - name: products
