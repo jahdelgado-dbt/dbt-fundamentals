@@ -7,7 +7,7 @@ sources:
       - name: customers
       - name: customers_training
       - name: items
-      - name: orders
+      - name: orders_jdelgado
       - name: orders_snapshot2
       - name: orders_training
       - name: products

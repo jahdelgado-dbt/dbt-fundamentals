@@ -2,7 +2,7 @@ with
 
 source as (
 
-    select * from {{ source('jaffle_shop', 'orders') }}
+    select * from {{ source('jaffle_shop', 'orders_jdelgado') }}
 
 ),
 
@@ -13,8 +13,7 @@ renamed as (
         user_id as customer_id,
         order_date,
         status as order_status,
-        _etl_loaded_at,
-        cdel3
+        _etl_loaded_at
 
     from source
 
