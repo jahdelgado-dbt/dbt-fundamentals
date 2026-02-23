@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 sources:
   - name: jaffle_shop
     database: raw  
@@ -24,3 +25,32 @@ sources:
       - name: payment
 
  
+=======
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+    tables:
+      - name: customers
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+              
+      - name: customers_training
+      - name: items
+      - name: orders_jdelgado
+        columns:
+          - name: id
+            data_tests:
+              - unique
+              - not_null
+              
+      - name: orders_snapshot2
+      - name: orders_training
+      - name: products
+      - name: stores
+      - name: supplies
+>>>>>>> fc71a1a3c33f44f3c39bade3f06b729487ffd0c5
