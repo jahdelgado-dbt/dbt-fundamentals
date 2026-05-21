@@ -1,0 +1,116 @@
+semantic_models:
+
+  # -----------------------------------------------
+  # Semantic Model: Orders
+  # -----------------------------------------------
+  - name: orders
+    description: "Order-level data from the Jaffle Shop staging layer. Grain is one order per row."
+    model: ref('stg_jaffle_shop__orders')
+
+    entities:
+      - name: order_id
+        type: primary
+      - name: customer_id
+        type: foreign
+
+    dimensions:
+      - name: order_date
+        type: time
+        type_params:
+          time_granularity: day
+      - name: order_status
+        type: categorical
+
+    measures:
+      - name: order_count
+        description: "Total number of orders"
+        agg: count_distinct
+        expr: order_id
+      - name: order_total
+        description: "Total revenue from orders"
+        agg: sum
+        expr: amount
+
+  # -----------------------------------------------
+  # Semantic Model: Customers
+  # -----------------------------------------------
+  - name: customers
+    description: "Customer-level data from the Jaffle Shop staging layer. Grain is one customer per row."
+    model: ref('stg_jaffle_shop__customers')
+
+    entities:
+      - name: customer_id
+        type: primary
+
+    dimensions:
+      - name: first_name
+        type: categorical
+      - name: last_name
+        type: categorical
+
+
+metrics:
+
+  # -----------------------------------------------
+  # Simple Metrics
+  # -----------------------------------------------
+  - name: order_count
+    label: "Order Count"
+    description: "Total number of orders placed"
+    type: simple
+    type_params:
+      measure: order_count
+
+  - name: revenue
+    label: "Revenue"
+    description: "Total revenue from all orders"
+    type: simple
+    type_params:
+      measure: order_total
+
+  # -----------------------------------------------
+  # Filtered Metrics (by order_status)
+  # -----------------------------------------------
+  - name: completed_orders
+    label: "Completed Orders"
+    description: "Count of orders with status = completed"
+    type: simple
+    type_params:
+      measure: order_count
+    filter: |
+      {{ Dimension('order__order_status') }} = 'completed'
+
+  - name: returned_orders
+    label: "Returned Orders"
+    description: "Count of orders with status = returned"
+    type: simple
+    type_params:
+      measure: order_count
+    filter: |
+      {{ Dimension('order__order_status') }} = 'returned'
+
+  # -----------------------------------------------
+  # Ratio Metric
+  # -----------------------------------------------
+  - name: return_rate
+    label: "Return Rate"
+    description: "Percentage of orders that were returned"
+    type: ratio
+    type_params:
+      numerator: returned_orders
+      denominator: order_count
+
+  # -----------------------------------------------
+  # Derived Metric
+  # -----------------------------------------------
+  - name: order_count_change_7d
+    label: "7-Day Order Count Change"
+    description: "Change in order count compared to 7 days ago"
+    type: derived
+    type_params:
+      expr: order_count - order_count_7d_ago
+      input_metrics:
+        - name: order_count
+        - name: order_count
+          alias: order_count_7d_ago
+          offset_window: 7 days
