@@ -6,12 +6,16 @@ semantic_models:
   - name: orders
     description: "Order-level data from the Jaffle Shop staging layer. Grain is one order per row."
     model: ref('stg_jaffle_shop__orders')
+    defaults:
+      agg_time_dimension: order_date
 
     entities:
-      - name: order_id
+      - name: order
         type: primary
-      - name: customer_id
+        expr: order_id
+      - name: customer
         type: foreign
+        expr: customer_id
 
     dimensions:
       - name: order_date
@@ -39,15 +43,15 @@ semantic_models:
     model: ref('stg_jaffle_shop__customers')
 
     entities:
-      - name: customer_id
+      - name: customer
         type: primary
+        expr: customer_id
 
     dimensions:
       - name: first_name
         type: categorical
       - name: last_name
         type: categorical
-
 
 metrics:
 
@@ -109,7 +113,7 @@ metrics:
     type: derived
     type_params:
       expr: order_count - order_count_7d_ago
-      input_metrics:
+      metrics:
         - name: order_count
         - name: order_count
           alias: order_count_7d_ago
