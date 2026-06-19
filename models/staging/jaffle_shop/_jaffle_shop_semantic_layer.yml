@@ -9,7 +9,7 @@ models:
       - name: order_id
         entity:
           type: primary
-          name: order
+          name: orders
       - name: customer_id
         entity:
           type: foreign
@@ -45,7 +45,7 @@ models:
         description: "Count of orders with status = completed"
         type: simple
         filter: |
-          {{ Dimension('order__order_status') }} = 'completed'
+          {{ Dimension('orders__order_status') }} = 'completed'
         agg: count_distinct
         expr: order_id
       - name: returned_orders
@@ -53,7 +53,7 @@ models:
         description: "Count of orders with status = returned"
         type: simple
         filter: |
-          {{ Dimension('order__order_status') }} = 'returned'
+          {{ Dimension('orders__order_status') }} = 'returned'
         agg: count_distinct
         expr: order_id
       - name: return_rate
