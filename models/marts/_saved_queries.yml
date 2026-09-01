@@ -1,0 +1,23 @@
+saved_queries:
+  - name: sq_repro_135149
+    label: "Repro 135149 Ops Summary"
+    description: >
+      Repro for Zendesk #135149 - declarative cache never hit.
+      Mirrors the customer setup: metrics grouped by common dimensions,
+      an export (export_as: table), and cache enabled.
+    query_params:
+      metrics:
+        - revenue
+        - order_count
+      group_by:
+        - "TimeDimension('metric_time', 'day')"
+        - "Dimension('orders__order_status')"
+      where:
+        - "{{ TimeDimension('metric_time', 'day') }} >= '2020-01-01'"
+    config:
+      cache:
+        enabled: true
+    exports:
+      - name: export_repro_135149
+        config:
+          export_as: table
