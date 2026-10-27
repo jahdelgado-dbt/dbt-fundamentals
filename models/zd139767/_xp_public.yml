@@ -1,0 +1,24 @@
+models:
+  - name: xp_public_a
+    config:
+      access: public
+      materialized: table
+      contract:
+        enforced: true
+    columns:
+      - name: id
+        data_type: number
+      - name: val
+        data_type: varchar
+
+  - name: xp_public_b
+    config:
+      access: public
+      materialized: table
+      contract:
+        enforced: true
+    columns:
+      - name: id
+        data_type: number
+      - name: val
+        data_type: varchar
